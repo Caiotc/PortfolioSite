@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "6",
     "react-scripts": "5.0.1",
     "sass": "^1.52.3",
     "web-vitals": "^2.1.4"
@@ -19,10 +20,16 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": [
+    "extends": [      
       "react-app",
-      "react-app/jest"
-    ]
+      "react-app/jest",
+      "eslint:recommended"
+    ],
+    "rules": {
+      "eqeqeq": "off",
+      "curly": "error",
+      "quotes": ["error", "double"]
+  }
   },
   "browserslist": {
     "production": [
