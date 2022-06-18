@@ -1,12 +1,14 @@
 import { useState } from "react";
-import "./sign-up-form.styles.scss";
 
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
+
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
 } from "../../utils/firebase/firebase.utils";
+
+import "./sign-up-form.styles.scss";
 
 const defaultFormFields = {
   displayName: "",
@@ -14,28 +16,31 @@ const defaultFormFields = {
   password: "",
   confirmPassword: "",
 };
+
 const SignUpForm = () => {
+  // use State region
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
 
+  console.log("hit");
+  // function region
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("!@# CHEGOU NO HANDLER");
     if (password !== confirmPassword) {
-      console.log("!@# e igual");
       return;
     }
 
     try {
-      const response = await createAuthUserWithEmailAndPassword(
+      const { user } = await createAuthUserWithEmailAndPassword(
         email,
         password
       );
+      await createUserDocumentFromAuth(user, { displayName });
       resetFormFields();
-      await createUserDocumentFromAuth(response.user, { displayName });
     } catch (error) {
       console.log("!@# errror =>", error);
     }
